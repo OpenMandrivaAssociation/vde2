@@ -1,7 +1,7 @@
-Summary: Virtual Distributed Ethernet
 Name: vde2
 Version: 2.1.6
 Release: %mkrel 1
+Summary: Virtual Distributed Ethernet
 Source0: http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1: README.mandriva
 License: GPL
@@ -14,20 +14,20 @@ Provides: vde = %{version}-%{release}
 %define libname  %mklibname vde 2
 
 %description
-VDE is a virtual network that can be spawned over a set of physical 
+VDE is a virtual network that can be spawned over a set of physical
 computer over the Internet
 
-VDE connects together: 
-  (1) real GNU-linux boxes (tuntap) 
+VDE connects together:
+  (1) real GNU-linux boxes (tuntap)
   (2) virtual machines: UML-User Mode Linux, qemu, bochs, MPS.
 
-VDE can be used: 
-  (i) to create a general purpose tunnel (every protocol that runs 
-    on a Ethernet can be put into the tunnel) 
-  (ii) to connect a set of virtual machine to the Internet with no 
-    need of free access of tuntap 
-  (iii) to support mobility: a VDE can stay interconnected despite 
-    of the change of virtual cables, i.e. the change of IP addresses 
+VDE can be used:
+  (i) to create a general purpose tunnel (every protocol that runs
+    on a Ethernet can be put into the tunnel)
+  (ii) to connect a set of virtual machine to the Internet with no
+    need of free access of tuntap
+  (iii) to support mobility: a VDE can stay interconnected despite
+    of the change of virtual cables, i.e. the change of IP addresses
     and interface in the real world
 
 %package -n %{libname}
