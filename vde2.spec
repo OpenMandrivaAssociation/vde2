@@ -7,7 +7,6 @@ Source1: README.mandriva
 License: GPL
 Group: Networking/Other
 Url: http://vde.sourceforge.net/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Obsoletes: vde <= 1.5.11
 Provides: vde = %{version}-%{release}
 
