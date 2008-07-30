@@ -1,6 +1,6 @@
 Name: vde2
 Version: 2.1.6
-Release: %mkrel 1
+Release: %mkrel 3
 Summary: Virtual Distributed Ethernet
 Source0: http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1: README.mandriva
