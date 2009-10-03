@@ -1,6 +1,9 @@
+%define libname %mklibname vde 2
+%define develname %mklibname -d vde
+
 Name:		vde2
 Version:	2.2.2
-Release:	%mkrel 2
+Release:	%mkrel 3
 Summary:	Virtual Distributed Ethernet
 Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1:	README.mandriva
@@ -14,9 +17,7 @@ Url:		http://vde.sourceforge.net/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
-
-%define libname %mklibname vde 2
-%define develname %mklibname -d vde
+Conflicts:	%develname < 2.2.2-3
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
@@ -51,6 +52,7 @@ Provides: libvde-devel = %{version}-%{release}
 Provides: libvde2-devel = %{version}-%{release}
 Provides: %{_lib}vde2-devel = %{version}-%{release}
 Obsoletes: %{_lib}vde2-devel
+Conflicts: %name < 2.2.2-3
 
 %description -n %{develname}
 Development files (headers, libraries) for libvde
@@ -63,15 +65,12 @@ Development files (headers, libraries) for libvde
 cp %SOURCE1 .
 
 %build
-aclocal
-autoconf -f
-libtoolize
-%configure
+%configure2_5x
 %make
 
 %install
 rm -rf %{buildroot}
-%makeinstall
+%makeinstall_std
 
 %clean
 rm -rf %{buildroot}
@@ -88,6 +87,7 @@ rm -rf %{buildroot}
 %{_sysconfdir}/vde2/libvdemgmt/openmachine.rc
 %{_sysconfdir}/vde2/libvdemgmt/sendcmd.rc
 %{_sysconfdir}/vde2/vdecmd
+%{_libdir}/vde2/libvde*.so
 %{_libdir}/vde2/vde_l3/bfifo.so
 %{_libdir}/vde2/vde_l3/pfifo.so
 %{_libdir}/vde2/vde_l3/tbf.so
@@ -99,7 +99,6 @@ rm -rf %{buildroot}
 %{_includedir}/libvde*.h
 %{_libdir}/libvde*.so
 %{_libdir}/libvde*.*a
-%{_libdir}/vde2/libvde*.so
 %{_libdir}/vde2/libvde*.*a
 %{_libdir}/vde2/vde_l3/bfifo.la
 %{_libdir}/vde2/vde_l3/pfifo.la
