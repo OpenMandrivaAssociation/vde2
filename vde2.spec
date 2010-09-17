@@ -3,7 +3,7 @@
 
 Name:		vde2
 Version:	2.2.2
-Release:	%mkrel 4
+Release:	%mkrel 5
 Summary:	Virtual Distributed Ethernet
 Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1:	README.mandriva
@@ -46,6 +46,7 @@ Library files for VDE
 %package -n %{develname}
 Summary: VDE development libraries
 Group: Development/Other
+Requires: %{libname} = %{version}-%{release}
 Provides: %{name}-devel
 Provides: vde-devel = %{version}-%{release}
 Provides: libvde-devel = %{version}-%{release}
