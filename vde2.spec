@@ -1,23 +1,21 @@
-%define libname %mklibname vde 2
 %define develname %mklibname -d vde
+%define _disable_ld_no_undefined 1
 
 Name:		vde2
-Version:	2.2.2
-Release:	%mkrel 6
+Version:	2.3.2
+Release:	1
 Summary:	Virtual Distributed Ethernet
+License:	GPL
+Group:		Networking/Other
+Url:		http://vde.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1:	README.mandriva
 # Build fixes
 Patch0:		vde-2.2.2-string-format.patch
-Patch1:		vde-2.2.2-fix-linking.patch
-Patch2:		vde-2.2.2-fix-includes.patch
-License:	GPL
-Group:		Networking/Other
-Url:		http://vde.sourceforge.net/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
-Conflicts:	%develname < 2.2.2-3
+Conflicts:	%{develname} < 2.3.2
+Obsoletes:	%{mklibname vde 2} < 2.3.2
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
@@ -36,52 +34,11 @@ VDE can be used:
     of the change of virtual cables, i.e. the change of IP addresses
     and interface in the real world
 
-%package -n %{libname}
-Summary: VDE libraries
-Group: Networking/Other
-
-%description -n %{libname}
-Library files for VDE
-
-%package -n %{develname}
-Summary: VDE development libraries
-Group: Development/Other
-Requires: %{libname} = %{version}-%{release}
-Provides: %{name}-devel
-Provides: vde-devel = %{version}-%{release}
-Provides: libvde-devel = %{version}-%{release}
-Provides: libvde2-devel = %{version}-%{release}
-Provides: %{_lib}vde2-devel = %{version}-%{release}
-Obsoletes: %{_lib}vde2-devel
-Conflicts: %name < 2.2.2-3
-
-%description -n %{develname}
-Development files (headers, libraries) for libvde
-
-%prep
-%setup -q
-%patch0 -p1 -b .strfmt
-%patch1 -p1 -b .link
-%patch2 -p1 -b .limits
-cp %SOURCE1 .
-
-%build
-%configure2_5x
-%make
-
-%install
-rm -rf %{buildroot}
-%makeinstall_std
-
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
+%doc README README.mandriva
 %{_bindir}/*
 %{_sbindir}/vde_tunctl
 %{_libdir}/vdetap
-%doc README README.mandriva
 %{_mandir}/man*/*.*
 %{_sysconfdir}/vde2/libvdemgmt/asyncrecv.rc
 %{_sysconfdir}/vde2/libvdemgmt/closemachine.rc
@@ -93,14 +50,150 @@ rm -rf %{buildroot}
 %{_libdir}/vde2/vde_l3/pfifo.so
 %{_libdir}/vde2/vde_l3/tbf.so
 
-%files -n %{libname}
-%{_libdir}/libvde*.so.*
+#-----------------------------------------------------
+
+%define vdehist_major 0
+%define libvdehist %mklibname vdehist %{vdehist_major}
+
+%package -n %{libvdehist}
+Summary:	VDE libraries
+Group:		Networking/Other
+Conflicts:	%{mklibname vde 2} < 2.3.2
+
+%description -n %{libvdehist}
+Library files for VDE.
+
+%files -n %{libvdehist}
+%{_libdir}/libvdehist.so.%{vdehist_major}*
+
+#-----------------------------------------------------
+
+%define vdemgmt_major 0
+%define libvdemgmt %mklibname vdemgmt %{vdemgmt_major}
+
+%package -n %{libvdemgmt}
+Summary:	VDE libraries
+Group:		Networking/Other
+Conflicts:	%{mklibname vde 2} < 2.3.2
+
+%description -n %{libvdemgmt}
+Library files for VDE.
+
+%files -n %{libvdemgmt}
+%{_libdir}/libvdemgmt.so.%{vdemgmt_major}*
+
+#-----------------------------------------------------
+
+%define vdeplug_major 3
+%define libvdeplug %mklibname vdeplug %{vdeplug_major}
+
+%package -n %{libvdeplug}
+Summary:	VDE libraries
+Group:		Networking/Other
+Conflicts:	%{mklibname vde 2} < 2.3.2
+
+%description -n %{libvdeplug}
+Library files for VDE.
+
+%files -n %{libvdeplug}
+%{_libdir}/libvdeplug.so.%{vdeplug_major}*
+
+#-----------------------------------------------------
+
+%define vdesnmp_major 0
+%define libvdesnmp %mklibname vdesnmp %{vdesnmp_major}
+
+%package -n %{libvdesnmp}
+Summary:	VDE libraries
+Group:		Networking/Other
+Conflicts:	%{mklibname vde 2} < 2.3.2
+
+%description -n %{libvdesnmp}
+Library files for VDE.
+
+%files -n %{libvdesnmp}
+%{_libdir}/libvdesnmp.so.%{vdesnmp_major}*
+
+#-----------------------------------------------------
+
+%package -n %{develname}
+Summary:	VDE development libraries
+Group:		Development/Other
+Requires:	%{libvdehist} = %{version}-%{release}
+Requires:	%{libvdemgmt} = %{version}-%{release}
+Requires:	%{libvdeplug} = %{version}-%{release}
+Requires:	%{libvdesnmp} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	vde-devel = %{version}-%{release}
+Provides:	libvde-devel = %{version}-%{release}
+Provides:	libvde2-devel = %{version}-%{release}
+Conflicts:	%{name} < 2.3.2
+
+%description -n %{develname}
+Development files (headers, libraries) for libvde
 
 %files -n %{develname}
 %{_includedir}/libvde*.h
 %{_libdir}/libvde*.so
-%{_libdir}/libvde*.*a
-%{_libdir}/vde2/libvde*.*a
-%{_libdir}/vde2/vde_l3/bfifo.la
-%{_libdir}/vde2/vde_l3/pfifo.la
-%{_libdir}/vde2/vde_l3/tbf.la
+%{_libdir}/pkgconfig/vde*.pc
+
+#-----------------------------------------------------
+
+%prep
+%setup -q
+%patch0 -p1 -b .strfmt
+cp %{SOURCE1} .
+
+%build
+%configure2_5x \
+    --disable-static
+make
+
+%install
+%makeinstall_std
+
+%changelog
+* Fri May 06 2011 Oden Eriksson <oeriksson@mandriva.com> 2.2.2-6mdv2011.0
++ Revision: 670764
+- mass rebuild
+
+* Sat Sep 18 2010 Funda Wang <fwang@mandriva.org> 2.2.2-5mdv2011.0
++ Revision: 579333
+- add requires on lib package
+
+* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 2.2.2-4mdv2010.1
++ Revision: 521165
+- rebuilt for 2010.1
+
+* Sat Oct 03 2009 Funda Wang <fwang@mandriva.org> 2.2.2-3mdv2010.0
++ Revision: 453243
+- move module into main package
+- fix linking
+
+  + Christophe Fergeau <cfergeau@mandriva.com>
+    - rebuild
+
+* Tue Feb 24 2009 Frederik Himpe <fhimpe@mandriva.org> 2.2.2-1mdv2009.1
++ Revision: 344592
+- Update to new version 2.2.2
+- Add patches to fix build (adds limits.h includes for PATH_MAX,
+  fix building with -Werror=format and fix linkage issue with
+  --no-undefined and --as-needed)
+- Clean up SPEC file
+- Don't add major in devel subpackage
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+    - rebuild
+
+* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 2.1.6-1mdv2008.1
++ Revision: 140925
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Fri May 11 2007 Ademar de Souza Reis Jr <ademar@mandriva.com.br> 2.1.6-1mdv2008.0
++ Revision: 26390
+- Import vde2
+

@@ -1,0 +1,27 @@
+You can use vde to configure qemu to access the local network:
+(from http://blog.bravecobra.com/index.php/linux?p=41&more=1&page=2)
+
+vde_switch -tap tun -daemon
+ifconfig tun 192.168.193.225 (some free subnet & address)
+chmod 666 /tmp/vde.ctl
+
+Now check with ifconfig whether you see the tun device with the specified 
+IP address. That address will act as the gateway for our guest. 
+
+Next we want this gateway to forward packets to the eth0 (our local 
+network connection and/or internet connection). To do this we use iptables:
+
+echo "1" > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+vdeqemu -hda hd.img -boot c
+
+In qemu configure networking to use another IP in the local subnet with a
+gateway corresponding the the tun device IP:
+
+    * IP: 192.168.193.226 (some free address in our new subnet)
+    * subnetmask: 255.255.255.0
+    * gateway:192.168.193.225 (our host tun device)
+    * DNS: set it the same as your host OS
+
+
