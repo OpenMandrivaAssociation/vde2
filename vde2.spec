@@ -16,6 +16,7 @@ Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
 Obsoletes:	%{mklibname vde 2} < 2.3.2
+BuildRequires:	pkgconfig(python)
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
@@ -38,7 +39,7 @@ VDE can be used:
 %doc README README.mandriva
 %{_bindir}/*
 %{_sbindir}/vde_tunctl
-%{_libdir}/vdetap
+%{_libexecdir}/vdetap
 %{_mandir}/man*/*.*
 %{_sysconfdir}/vde2/libvdemgmt/asyncrecv.rc
 %{_sysconfdir}/vde2/libvdemgmt/closemachine.rc
@@ -138,6 +139,16 @@ Development files (headers, libraries) for libvde
 %{_libdir}/pkgconfig/vde*.pc
 
 #-----------------------------------------------------
+%package -n python-%{name}
+Summary:	Python bindings to the VDE library
+Group:		Networking/Other
+
+%description -n python-%{name}
+
+%files -n python-%{name}
+%{_prefix}/lib/python*/site-packages/*
+
+#-----------------------------------------------------
 
 %prep
 %setup -q
@@ -147,53 +158,8 @@ cp %{SOURCE1} .
 %build
 %configure2_5x \
     --disable-static
+# Makefiles aren't SMP ready
 make
 
 %install
 %makeinstall_std
-
-%changelog
-* Fri May 06 2011 Oden Eriksson <oeriksson@mandriva.com> 2.2.2-6mdv2011.0
-+ Revision: 670764
-- mass rebuild
-
-* Sat Sep 18 2010 Funda Wang <fwang@mandriva.org> 2.2.2-5mdv2011.0
-+ Revision: 579333
-- add requires on lib package
-
-* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 2.2.2-4mdv2010.1
-+ Revision: 521165
-- rebuilt for 2010.1
-
-* Sat Oct 03 2009 Funda Wang <fwang@mandriva.org> 2.2.2-3mdv2010.0
-+ Revision: 453243
-- move module into main package
-- fix linking
-
-  + Christophe Fergeau <cfergeau@mandriva.com>
-    - rebuild
-
-* Tue Feb 24 2009 Frederik Himpe <fhimpe@mandriva.org> 2.2.2-1mdv2009.1
-+ Revision: 344592
-- Update to new version 2.2.2
-- Add patches to fix build (adds limits.h includes for PATH_MAX,
-  fix building with -Werror=format and fix linkage issue with
-  --no-undefined and --as-needed)
-- Clean up SPEC file
-- Don't add major in devel subpackage
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - rebuild
-    - rebuild
-
-* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 2.1.6-1mdv2008.1
-+ Revision: 140925
-- restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Fri May 11 2007 Ademar de Souza Reis Jr <ademar@mandriva.com.br> 2.1.6-1mdv2008.0
-+ Revision: 26390
-- Import vde2
-
