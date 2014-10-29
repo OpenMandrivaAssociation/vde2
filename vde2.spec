@@ -17,7 +17,7 @@ Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
 Obsoletes:	%{mklibname vde 2} < 2.3.2
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
