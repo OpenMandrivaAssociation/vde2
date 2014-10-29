@@ -3,7 +3,7 @@
 
 Name:		vde2
 Version:	2.3.2
-Release:	7
+Release:	8
 Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
@@ -12,6 +12,7 @@ Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1:	README.mandriva
 # Build fixes
 Patch0:		vde-2.2.2-string-format.patch
+Patch1:		vd2-2.3.2-clang.patch
 Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
@@ -152,12 +153,11 @@ Group:		Networking/Other
 
 %prep
 %setup -q
-%patch0 -p1 -b .strfmt
+%apply_patches
 cp %{SOURCE1} .
 
 %build
-%configure2_5x \
-    --disable-static
+%configure
 # Makefiles aren't SMP ready
 make
 
