@@ -3,7 +3,7 @@
 
 Name:		vde2
 Version:	2.3.2
-Release:	11
+Release:	12
 Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
