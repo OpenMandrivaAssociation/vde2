@@ -3,7 +3,7 @@
 
 Name:		vde2
 Version:	2.3.2
-Release:	13
+Release:	14
 Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
@@ -152,14 +152,13 @@ Group:		Networking/Other
 #-----------------------------------------------------
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 cp %{SOURCE1} .
 
 %build
 %configure
 # Makefiles aren't SMP ready
-make
+%make_build -j1
 
 %install
-%makeinstall_std
+%make_install
