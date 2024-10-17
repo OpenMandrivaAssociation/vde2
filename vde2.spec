@@ -7,7 +7,7 @@ Release:	15
 Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
-Url:		http://vde.sourceforge.net/
+Url:		https://vde.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
 Source1:	README.mandriva
 # Build fixes
