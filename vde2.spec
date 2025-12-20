@@ -19,7 +19,7 @@ Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
 Obsoletes:	%{mklibname vde 2} < 2.3.2
 BuildRequires:	pkgconfig(python3)
-BuildRequires:  libtool
+BuildRequires:  libtool m4
 BuildRequires:  make
 
 %description
