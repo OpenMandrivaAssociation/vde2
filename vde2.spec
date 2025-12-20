@@ -20,7 +20,7 @@ Conflicts:	%{develname} < 2.3.2
 Obsoletes:	%{mklibname vde 2} < 2.3.2
 BuildRequires:	pkgconfig(python3)
 BuildRequires:  libtool m4
-BuildRequires:  make
+BuildRequires:  make automake
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
