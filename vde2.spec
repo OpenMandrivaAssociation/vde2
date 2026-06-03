@@ -1,3 +1,6 @@
+%global optflags %{optflags} -Wno-error -Wno-implicit-function-declaration
+%global optflags %{optflags} -Wno-incompatible-function-pointer-types
+
 %define develname %mklibname -d vde
 %define _disable_ld_no_undefined 1
 
