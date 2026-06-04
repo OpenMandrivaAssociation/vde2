@@ -167,7 +167,7 @@ Group:		Networking/Other
 %description -n python-%{name}
 
 %files -n python-%{name}
-%{_prefix}/lib/python*/site-packages/*
+#{_prefix}/lib/python*/site-packages/*
 
 #-----------------------------------------------------
 
