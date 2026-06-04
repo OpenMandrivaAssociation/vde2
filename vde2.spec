@@ -177,7 +177,7 @@ cp %{SOURCE1} .
 
 %build
 autoreconf -fi
-%configure --disable-python \
+%configure --enable-python \
            --disable-static \
            --disable-silent-rules \
            --enable-kernel-switch \
