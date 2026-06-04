@@ -174,7 +174,12 @@ cp %{SOURCE1} .
 
 %build
 autoreconf -fi
-%configure
+%configure --disable-python \
+           --disable-static \
+           --disable-silent-rules \
+           --enable-kernel-switch \
+           --enable-experimental \
+           --with-crypt=mbedtls
 # Makefiles aren't SMP ready
 %make_build -j1
 
