@@ -1,0 +1,45 @@
+From f16d23a754c6957cde614608ecfcff48db0d1167 Mon Sep 17 00:00:00 2001
+From: Samuele Musiani <samu@teapot.ovh>
+Date: Sun, 22 Dec 2024 11:17:32 +0100
+Subject: [PATCH 10/14] fix: connecting to a non-existing port on switch
+ returns error
+
+---
+ src/vde_switch/datasock.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/src/vde_switch/datasock.c b/src/vde_switch/datasock.c
+index be655e7..6dc4b35 100644
+--- a/src/vde_switch/datasock.c
++++ b/src/vde_switch/datasock.c
+@@ -259,19 +259,24 @@ static void handle_io(unsigned char type,int fd,int revents,void *arg)
+ 					if (ep != NULL) {
+ 						mainloop_set_private_data(fd,ep);
+ 						setup_description(ep,strdup(req->v3.description));
++					} else {
++						remove_fd(fd);
++						return;
+ 					}
+ 				}
+ 				else if(req->v3.version > 2 || req->v3.version == 2) {
+ 					printlog(LOG_ERR, "Request for a version %d port, which this "
+ 							"vde_switch doesn't support", req->v3.version);
+-					remove_fd(fd); 
+-				}
+-				else {
++					remove_fd(fd);
++				} else {
+ 					memcpy(&sa_un, &req->v1.u.new_control.name, sizeof(struct sockaddr_un));
+ 					ep=new_port_v1_v3(fd, req->v1.type, &sa_un);
+ 					if (ep != NULL) {
+ 						mainloop_set_private_data(fd,ep);
+ 						setup_description(ep,strdup(req->v1.description));
++					} else {
++						remove_fd(fd);
++						return;
+ 					}
+ 				}
+ 			}
+-- 
+2.49.0
+
