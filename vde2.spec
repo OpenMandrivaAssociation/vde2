@@ -5,18 +5,18 @@
 %define _disable_ld_no_undefined 1
 
 Name:		vde2
-Version:	2.3.2
-Release:	17
+Version:	2.3.3
+Release:	1
 Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
 Url:		https://vde.sourceforge.net/
-Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
+Source0:	https://github.com/virtualsquare/vde-2/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:	README.mandriva
 # Build fixes
-Patch0:		vde-2.2.2-string-format.patch
-Patch1:		vd2-2.3.2-clang.patch
-Patch2:		vde-2.3.2-openssl-1.1.patch
+#Patch0:		vde-2.2.2-string-format.patch
+#Patch1:		vd2-2.3.2-clang.patch
+#Patch2:		vde-2.3.2-openssl-1.1.patch
 Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
