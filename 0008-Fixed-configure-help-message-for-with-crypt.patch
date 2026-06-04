@@ -1,0 +1,27 @@
+From e84cc63cdbc5c60af55204194d29f7c3b9f7357f Mon Sep 17 00:00:00 2001
+From: Renzo Davoli <renzo@cs.unibo.it>
+Date: Tue, 22 Oct 2024 11:33:44 +0200
+Subject: [PATCH 08/14] Fixed configure help message for `--with-crypt`
+
+---
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index ec63bf6..dfa36b7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -136,8 +136,8 @@ AC_ARG_ENABLE([experimental],
+ 
+ # Select crypt implementation for cryptcab
+ AC_ARG_WITH([crypt],
+-  AS_HELP_STRING([],
+-    [Choose implementation for cryptcab - wolfssl, mbedtls]),
++  AS_HELP_STRING([--with-crypt=wolfssl|mbedtls],
++    [Choose implementation for cryptcab]),
+   [crypt="$withval"],
+   [crypt='wolfssl'])
+ 
+-- 
+2.49.0
+

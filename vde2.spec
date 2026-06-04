@@ -3,30 +3,42 @@
 
 %define develname %mklibname -d vde
 %define _disable_ld_no_undefined 1
+%global optflags %optflags -std=gnu17
 
 Name:		vde2
-Version:	2.3.2
-Release:	17
+Version:	2.3.3
+Release:	1
 Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
 Url:		https://vde.sourceforge.net/
-Source0:	http://prdownloads.sourceforge.net/vde/%{name}-%{version}.tar.bz2
+Source0:	https://github.com/virtualsquare/vde-2/archive/v%{version}/vde-2-%{version}.tar.gz
 Source1:	README.mandriva
 # Build fixes
-Patch0:		vde-2.2.2-string-format.patch
-Patch1:		vd2-2.3.2-clang.patch
-Patch2:		vde-2.3.2-openssl-1.1.patch
+#Patch0:		vde-2.2.2-string-format.patch
+#Patch1:		vd2-2.3.2-clang.patch
+#Patch2:		vde-2.3.2-openssl-1.1.patch
+Patch1:      0006-Removed-deprecated-configuration.patch
+Patch2:      0007-VDE-Cryptcab-add-mbedtls-chacha20-impl.patch
+Patch3:      0008-Fixed-configure-help-message-for-with-crypt.patch
+Patch4:      0010-fix-connecting-to-a-non-existing-port-on-switch-retu.patch
+Patch5:      0011-fix-len-size-on-connect.patch
+Patch6:      0012-params-to-NULL-as-not-used.patch
+Patch7:      0013-fix-avoid-segfault-on-invalid-args.patch
+
 Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
 Obsoletes:	%{mklibname vde 2} < 2.3.2
+Obsoletes:		python-vde2
 BuildRequires:	autoconf
 BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	pkgconfig(python3)
 BuildRequires:  libtool m4
 BuildRequires:  make automake
+BuildRequires:	pkgconfig(libpcap)
+BuildRequires:	pkgconfig(mbedtls)
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
@@ -48,7 +60,7 @@ VDE can be used:
 %files
 %doc README README.mandriva
 %{_bindir}/*
-%{_sbindir}/vde_tunctl
+#{_sbindir}/vde_tunctl
 %{_libexecdir}/vdetap
 %{_mandir}/man*/*.*
 %{_sysconfdir}/vde2/libvdemgmt/asyncrecv.rc
@@ -57,9 +69,9 @@ VDE can be used:
 %{_sysconfdir}/vde2/libvdemgmt/sendcmd.rc
 %{_sysconfdir}/vde2/vdecmd
 %{_libdir}/vde2/libvde*.so
-%{_libdir}/vde2/vde_l3/bfifo.so
-%{_libdir}/vde2/vde_l3/pfifo.so
-%{_libdir}/vde2/vde_l3/tbf.so
+%{_libdir}/vde2/plugins/dump.so
+%{_libdir}/vde2/plugins/iplog.so
+%{_libdir}/vde2/plugins/pdump.so
 
 #-----------------------------------------------------
 
@@ -149,23 +161,29 @@ Development files (headers, libraries) for libvde
 %{_libdir}/pkgconfig/vde*.pc
 
 #-----------------------------------------------------
-%package -n python-%{name}
-Summary:	Python bindings to the VDE library
-Group:		Networking/Other
+#package -n python-%{name}
+#Summary:	Python bindings to the VDE library
+#Group:		Networking/Other
 
-%description -n python-%{name}
+#description -n python-%{name}
 
-%files -n python-%{name}
-%{_prefix}/lib/python*/site-packages/*
+#files -n python-%{name}
+#{_prefix}/lib/python*/site-packages/*
 
 #-----------------------------------------------------
 
 %prep
-%autosetup -p1
+%autosetup -n vde-2-%{version} -p1
 cp %{SOURCE1} .
 
 %build
-%configure
+autoreconf -fi
+%configure --enable-python \
+           --disable-static \
+           --disable-silent-rules \
+           --enable-kernel-switch \
+           --enable-experimental \
+           --with-crypt=mbedtls
 # Makefiles aren't SMP ready
 %make_build -j1
 
