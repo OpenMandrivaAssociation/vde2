@@ -35,6 +35,8 @@ BuildRequires:	slibtool
 BuildRequires:	pkgconfig(python3)
 BuildRequires:  libtool m4
 BuildRequires:  make automake
+BuildRequires:	pkgconfig(libpcap)
+BuildRequires:	pkgconfig(mbedtls)
 
 %description
 VDE is a virtual network that can be spawned over a set of physical
