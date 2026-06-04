@@ -11,7 +11,7 @@ Summary:	Virtual Distributed Ethernet
 License:	GPL
 Group:		Networking/Other
 Url:		https://vde.sourceforge.net/
-Source0:	https://github.com/virtualsquare/vde-2/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/virtualsquare/vde-2/archive/v%{version}/vde-2-%{version}.tar.gz
 Source1:	README.mandriva
 # Build fixes
 #Patch0:		vde-2.2.2-string-format.patch
@@ -161,7 +161,7 @@ Group:		Networking/Other
 #-----------------------------------------------------
 
 %prep
-%autosetup -p1
+%autosetup -n vde-2-%{version} -p1
 cp %{SOURCE1} .
 
 %build
