@@ -17,7 +17,14 @@ Source1:	README.mandriva
 #Patch0:		vde-2.2.2-string-format.patch
 #Patch1:		vd2-2.3.2-clang.patch
 #Patch2:		vde-2.3.2-openssl-1.1.patch
-Patch3:  vde2-C99.patch
+Patch1:      0006-Removed-deprecated-configuration.patch
+Patch2:      0007-VDE-Cryptcab-add-mbedtls-chacha20-impl.patch
+Patch3:      0008-Fixed-configure-help-message-for-with-crypt.patch
+Patch4:      0010-fix-connecting-to-a-non-existing-port-on-switch-retu.patch
+Patch5:      0011-fix-len-size-on-connect.patch
+Patch6:      0012-params-to-NULL-as-not-used.patch
+Patch7:      0013-fix-avoid-segfault-on-invalid-args.patch
+
 Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
