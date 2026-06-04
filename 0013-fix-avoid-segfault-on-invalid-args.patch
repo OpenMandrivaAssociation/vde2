@@ -1,0 +1,24 @@
+From 053e06806d3f20db3a4d05f54a48a5d30f978f75 Mon Sep 17 00:00:00 2001
+From: Samuele Musiani <samu@teapot.ovh>
+Date: Tue, 24 Dec 2024 19:25:22 +0100
+Subject: [PATCH 13/14] fix: avoid segfault on invalid args
+
+---
+ src/unixcmd.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/unixcmd.c b/src/unixcmd.c
+index 83424d8..1c12369 100644
+--- a/src/unixcmd.c
++++ b/src/unixcmd.c
+@@ -56,6 +56,7 @@ int main(int argc,char *argv[])
+ 		{"rcfile", 1, 0, 'f'},
+ 		{"sock", 1, 0, 's'},
+ 		{"verbose", 0, 0, 'v'},
++    		{ 0, 0, 0, 0},
+ 	};
+ 	int c;
+ 	while ((c=getopt_long (argc, argv, "f:s:v",
+-- 
+2.49.0
+
