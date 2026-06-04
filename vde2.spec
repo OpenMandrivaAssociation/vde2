@@ -30,6 +30,7 @@ Obsoletes:	vde <= 1.5.11
 Provides:	vde = %{version}-%{release}
 Conflicts:	%{develname} < 2.3.2
 Obsoletes:	%{mklibname vde 2} < 2.3.2
+Obsoletes:		python-vde2
 BuildRequires:	autoconf
 BuildRequires:	libtool-base
 BuildRequires:	slibtool
@@ -160,13 +161,13 @@ Development files (headers, libraries) for libvde
 %{_libdir}/pkgconfig/vde*.pc
 
 #-----------------------------------------------------
-%package -n python-%{name}
-Summary:	Python bindings to the VDE library
-Group:		Networking/Other
+#package -n python-%{name}
+#Summary:	Python bindings to the VDE library
+#Group:		Networking/Other
 
-%description -n python-%{name}
+#description -n python-%{name}
 
-%files -n python-%{name}
+#files -n python-%{name}
 #{_prefix}/lib/python*/site-packages/*
 
 #-----------------------------------------------------
