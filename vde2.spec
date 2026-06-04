@@ -59,7 +59,7 @@ VDE can be used:
 %files
 %doc README README.mandriva
 %{_bindir}/*
-%{_sbindir}/vde_tunctl
+#{_sbindir}/vde_tunctl
 %{_libexecdir}/vdetap
 %{_mandir}/man*/*.*
 %{_sysconfdir}/vde2/libvdemgmt/asyncrecv.rc
@@ -68,9 +68,9 @@ VDE can be used:
 %{_sysconfdir}/vde2/libvdemgmt/sendcmd.rc
 %{_sysconfdir}/vde2/vdecmd
 %{_libdir}/vde2/libvde*.so
-%{_libdir}/vde2/vde_l3/bfifo.so
-%{_libdir}/vde2/vde_l3/pfifo.so
-%{_libdir}/vde2/vde_l3/tbf.so
+#{_libdir}/vde2/vde_l3/bfifo.so
+#{_libdir}/vde2/vde_l3/pfifo.so
+#{_libdir}/vde2/vde_l3/tbf.so
 
 #-----------------------------------------------------
 
