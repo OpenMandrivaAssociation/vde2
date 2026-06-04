@@ -3,6 +3,7 @@
 
 %define develname %mklibname -d vde
 %define _disable_ld_no_undefined 1
+%global optflags %optflags -std=gnu17
 
 Name:		vde2
 Version:	2.3.3
