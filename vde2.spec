@@ -165,6 +165,7 @@ Group:		Networking/Other
 cp %{SOURCE1} .
 
 %build
+autoreconf -fi
 %configure
 # Makefiles aren't SMP ready
 %make_build -j1
